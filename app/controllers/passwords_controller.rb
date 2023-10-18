@@ -3,11 +3,10 @@ class PasswordsController < ApplicationController
   before_action :set_password, except: [:index, :new, :create]
 
   def index
-    @passwords = current_user.passwords
+    @password = current_user.passwords
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @password = Password.new
@@ -20,6 +19,21 @@ class PasswordsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit; end
+
+  def update
+    if @password.update(password_params)
+      redirect_to @password
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @password.destroy
+    redirect_to root_path
   end
 
   private
